@@ -15,6 +15,12 @@ class GenericInterfaceClass:
 
 class Interface(GenericInterfaceClass):
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.transport.close_connection()
+
     @property
     def local_users(self):
         users = []
