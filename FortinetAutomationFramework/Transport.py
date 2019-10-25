@@ -7,7 +7,8 @@ class BaseTransportEngine(ABC):
 
     def __new__(cls, *args, **kwargs):
         cls = super().__new__(cls)
-        cls.cli_tracker = []
+        cls.hostname = None
+        cls.prompt = None
         return cls
 
     def __enter__(self):
@@ -17,30 +18,41 @@ class BaseTransportEngine(ABC):
         self.close_connection()
 
     def send_command(self, command, end='\n'):
-        self._update_cli_tracker(command)
         self._send_command(command, end)
 
-    def _update_cli_tracker(self, command) -> None:
-        if len(command) > 0:
-            tmp = command.split()[0].lower()
-            if tmp == 'config' or tmp == 'edit':
-                self.cli_tracker.append(' '.join(command.split()[1:]))
-            elif tmp == 'end':
-                self.cli_tracker.pop()
+    def _extract_hostname(self, output):
+        if type(output) == list:
+            pass
+        else:
+            output = output.splitlines()
+
+        self.hostname = output[-1].split()[0]
+
+    def _extract_full_prompt(self, output):
+        if type(output) == list:
+            pass
+        else:
+            output = output.splitlines()
+
+        self.prompt = output[-1]
 
     def send_command_get_output(self, command, end='\n', return_as_list=True, buffer_size=1024):
         self.send_command(command, end)
         return self.get_output(return_as_list=return_as_list, buffer_size=buffer_size)
 
+    def get_output(self,  buffer_size, return_as_list):
+        output = self._get_output(buffer_size=buffer_size, return_as_list=return_as_list)
+        self._extract_hostname(output)
+        self._extract_full_prompt(output)
+        return output
+
     @abstractmethod
-    def _send_command(self, command, end='\n'):
+    def _send_command(self, command, end):
         pass
 
     @abstractmethod
-    def get_output(self, buffer_size=1024, return_as_list=True):
+    def _get_output(self, buffer_size, return_as_list):
         pass
-
-
 
     @abstractmethod
     def close_connection(self):
@@ -55,11 +67,12 @@ class SSHEngine(BaseTransportEngine):
         self._client.connect(hostname, username=username, password=password)
         self._shell = self._client.invoke_shell()
         self._shell.settimeout(timeout)
+        self. send_command_get_output(' ')
 
-    def _send_command(self, command, end='\n'):
+    def _send_command(self, command, end):
         self._shell.send(command + end)
 
-    def get_output(self, buffer_size=1024, return_as_list=True):
+    def _get_output(self, buffer_size, return_as_list):
         data = ''
         while True:
             try:
