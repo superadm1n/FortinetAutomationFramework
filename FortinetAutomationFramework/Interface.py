@@ -12,12 +12,12 @@ class GenericInterfaceClass:
     @property
     def system_status(self):
         if not self._system_status:
-            self.return_to_root()
+            self.return_cli_to_root()
             return self.transport.send_command_get_output('get system status', return_as_list=True)
         else:
             return self._system_status
 
-    def return_to_root(self):
+    def return_cli_to_root(self):
         '''Method to issue the 'end' command until the CLI is at the root prompt. This is usefull when issuing
         a series of commands that you need to gaurintee a common place in the CLI structure. All methods
         that abstract data from the firewall should run this prior to any commands, via ssh it only takes about
@@ -58,7 +58,7 @@ class Interface(GenericInterfaceClass):
 
     @property
     def local_users(self):
-        self.return_to_root()
+        self.return_cli_to_root()
         users = []
         self.transport.send_command_get_output('config global')
         self.transport.send_command_get_output('config system admin')
