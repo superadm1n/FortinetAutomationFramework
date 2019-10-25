@@ -2,6 +2,7 @@ from FortinetAutomationFramework.Interface import Interface
 from FortinetAutomationFramework.Transport import SSHEngine
 
 __version__ = '0.1'
+__author__ = 'Kyle Kowalczyk'
 
 def connect_ssh(hostname, username, password):
     transport = SSHEngine(hostname=hostname, username=username, password=password)
