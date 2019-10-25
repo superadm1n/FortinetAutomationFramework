@@ -1,0 +1,32 @@
+get system status
+my_hostname # get system status
+Version: FortiGate-800C v5.6.8,build1672,190130 (GA)
+Virus-DB: 72.00576(2019-10-24 22:29)
+Extended DB: 72.00576(2019-10-24 22:28)
+Extreme DB: 1.00000(2012-10-17 15:47)
+IPS-DB: 6.00741(2015-12-01 02:30)
+IPS-ETDB: 14.00710(2019-10-24 02:28)
+APP-DB: 14.00710(2019-10-24 02:28)
+INDUSTRIAL-DB: 6.00741(2015-12-01 02:30)
+Serial-Number: FG800a12368543215
+IPS Malicious URL Database: 2.00449(2019-10-24 13:01)
+Botnet DB: 4.00609(2019-10-22 17:44)
+BIOS version: 12365428
+System Part-Number: p654321-56
+Log hard disk: Available
+Hostname: my_hostname
+Operation Mode: NAT
+Current virtual domain: root
+Max number of virtual domains: 10
+Virtual domains status: 3 in NAT mode, 4 in TP mode
+Virtual domain configuration: enable
+FIPS-CC mode: disable
+Current HA mode: a-p, master
+Cluster uptime: 100 days, 12 hours, 56 minutes, 47 seconds
+Cluster state change time: 2019-04-10 23:54:18
+Branch point: 1672
+Release Version Information: GA
+FortiOS x86-64: Yes
+System time: Fri Oct 25 09:08:35 2019
+
+my_hostname #
