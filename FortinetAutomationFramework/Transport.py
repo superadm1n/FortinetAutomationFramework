@@ -8,7 +8,8 @@ class BaseTransportEngine(ABC):
     '''
     This class implements the API for all transport engines, In order to implement a new transport engine
     other than what is already implemented, inherit from this class and override the methods with the
-    @abstractmethod decorator.
+    @abstractmethod decorator adding logic for sending commands, getting output, and closing the connection.
+    Connection to the server should be handled via __init__()
     '''
 
     def __new__(cls, *args, **kwargs):
